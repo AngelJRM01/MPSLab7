@@ -3,6 +3,7 @@ package org.mps.authentication;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,7 +31,13 @@ public class IntegrationTestIT {
     public void birthDateIncorrect(){
         date = new Date(0,1,2000);
 
-        CredentialValidator.ValidationStatus obtainedStatus = userRegistration.register(date, null, null);
+        passwordString = Mockito.mock(PasswordString.class);
+        Mockito.when(passwordString.validate()).thenReturn(true);
+
+        credentialStore = Mockito.mock(CredentialStore.class);
+        Mockito.when(credentialStore.credentialExists(Mockito.any(), Mockito.any())).thenReturn(false);
+
+        CredentialValidator.ValidationStatus obtainedStatus = userRegistration.register(date, passwordString, credentialStore);
 
         CredentialValidator.ValidationStatus expectedStatus  = CredentialValidator.ValidationStatus.BIRTHDAY_INVALID;
 
@@ -42,7 +49,10 @@ public class IntegrationTestIT {
         date = new Date(1,1,2000);
         passwordString = new PasswordString("aaa");
 
-        CredentialValidator.ValidationStatus obtainedStatus = userRegistration.register(date, passwordString, null);
+        credentialStore = Mockito.mock(CredentialStore.class);
+        Mockito.when(credentialStore.credentialExists(Mockito.any(), Mockito.any())).thenReturn(false);
+
+        CredentialValidator.ValidationStatus obtainedStatus = userRegistration.register(date, passwordString, credentialStore);
 
         CredentialValidator.ValidationStatus expectedStatus  = CredentialValidator.ValidationStatus.PASSWORD_INVALID;
 
