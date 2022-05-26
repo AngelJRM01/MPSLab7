@@ -7,6 +7,18 @@ import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ *
+ * Test cases for IntegrationTestIT
+ * @author Miguel Oña Guerrero y Ángel Joaquín Rodríguez Mercado
+ *
+ * Test birthDateIncorrect() *
+ * Test birthDateCorrectAndPasswordIncorrect() *
+ * Test birthDateCorrectAndPasswordCorrectAndExistingCredentials() *
+ * Test birthDateCorrectAndPasswordCorrectAndCredentialNotExists() *
+ *
+ */
+
 public class IntegrationTestIT {
 
     private CredentialStore credentialStore;
