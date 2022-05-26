@@ -80,4 +80,22 @@ public class IntegrationTestIT {
         assertEquals(sizeCredentialsStoreAfter, sizeCredentialsStoreBefore);
     }
 
+
+    @Test
+    public void birthDateCorrectAndPasswordCorrectAndCredentialNotExists(){
+        date = new Date(1,1,2000);
+        passwordString = new PasswordString("sk?9n.sdi=8");
+        credentialStore = new CredentialStoreSet();
+
+        int sizeCredentialsStoreBefore = credentialStore.size();
+
+        CredentialValidator.ValidationStatus obtainedStatus = userRegistration.register(date, passwordString, credentialStore);
+
+        CredentialValidator.ValidationStatus expectedStatus  = CredentialValidator.ValidationStatus.VALIDATION_OK;
+
+        int sizeCredentialsStoreAfter = credentialStore.size();
+
+        assertEquals(expectedStatus, obtainedStatus);
+        assertEquals(sizeCredentialsStoreAfter, sizeCredentialsStoreBefore + 1);
+    }
 }
