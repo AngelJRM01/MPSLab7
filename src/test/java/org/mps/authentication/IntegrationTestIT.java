@@ -59,4 +59,25 @@ public class IntegrationTestIT {
         assertEquals(expectedStatus, obtainedStatus);
     }
 
+    @Test
+    public void birthDateCorrectAndPasswordCorrectAndExistingCredentials(){
+        date = new Date(1,1,2000);
+        passwordString = new PasswordString("aaa8.aaa");
+
+        credentialStore = new CredentialStoreSet();
+
+        userRegistration.register(date, passwordString, credentialStore);
+
+        int sizeCredentialsStoreBefore = credentialStore.size();
+
+        CredentialValidator.ValidationStatus obtainedStatus = userRegistration.register(date, passwordString, credentialStore);
+
+        CredentialValidator.ValidationStatus expectedStatus  = CredentialValidator.ValidationStatus.EXISTING_CREDENTIAL;
+
+        int sizeCredentialsStoreAfter = credentialStore.size();
+
+        assertEquals(expectedStatus, obtainedStatus);
+        assertEquals(sizeCredentialsStoreAfter, sizeCredentialsStoreBefore);
+    }
+
 }
