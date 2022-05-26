@@ -4,7 +4,7 @@ import org.mps.authentication.CredentialValidator.ValidationStatus;
 
 public class UserRegistration {
 
-  public void register(Date birthDate, PasswordString passwordString,
+  public ValidationStatus register(Date birthDate, PasswordString passwordString,
       CredentialStore credentialStore) {
 
     var credentialValidator = new CredentialValidator(birthDate, passwordString, credentialStore);
@@ -13,5 +13,7 @@ public class UserRegistration {
     if (status == ValidationStatus.VALIDATION_OK) {
       credentialStore.register(birthDate, passwordString);
     }
+
+    return status;
   }
 }
